@@ -26,8 +26,8 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return taskServices.createTask(task);
+    public Task createTask(@RequestBody Task task, @RequestParam Long categoryId) {
+        return taskServices.createTask(task, categoryId);
     }
 
     @PatchMapping("/{id}/toggle")

@@ -1,6 +1,5 @@
 package com.managment.managementsystem.models;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -18,13 +17,18 @@ public class Task {
     private LocalDate dueDate;
     private boolean completed = false;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
     public Task() { }
 
-    public Task(String title, String description, LocalDate dueDate, boolean completed) {
+    public Task(String title, String description, LocalDate dueDate, boolean completed, Category category) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.completed = completed;
+        this.category = category;
     }
 
     public Long getId() {
@@ -61,5 +65,13 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

@@ -1,5 +1,6 @@
 package com.managment.managementsystem.services;
 
+import com.managment.managementsystem.models.Category;
 import com.managment.managementsystem.models.Task;
 import com.managment.managementsystem.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
@@ -10,9 +11,11 @@ import java.util.Optional;
 @Service
 public class TaskServices {
     private final TaskRepository taskRepository;
+    private final CategoryServices categoryServices;
 
-    public TaskServices(TaskRepository taskRepository) {
+    public TaskServices(TaskRepository taskRepository, CategoryServices categoryServices) {
         this.taskRepository = taskRepository;
+        this.categoryServices = categoryServices;
     }
 
     public List<Task> getAllTasks() {
@@ -23,7 +26,9 @@ public class TaskServices {
         return taskRepository.findByCompleted(completed);
     }
 
-    public Task createTask(Task task) {
+    public Task createTask(Task task, Long categoryId) {
+        Category category = categoryServices.getCategoryById(categoryId);
+        task.setCategory(category);
         return taskRepository.save(task);
     }
 
