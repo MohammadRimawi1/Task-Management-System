@@ -1,8 +1,11 @@
 package com.managment.managementsystem.controllers;
 
+import com.managment.managementsystem.dto.ApiResponse;
 import com.managment.managementsystem.models.Task;
 import com.managment.managementsystem.services.TaskServices;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,23 +19,24 @@ public class TaskController {
         this.taskServices = taskServices;
     }
 
-    @GetMapping
-    public List<Task> getAllTasks() {
-        return taskServices.getAllTasks();
-    }
-
-    @GetMapping("/status")
-    public List<Task> getTasksByStatus(@RequestParam boolean completed) {
-        return taskServices.getTasksByStatus(completed);
-    }
-
     @PostMapping
-    public Task createTask(@Valid @RequestBody Task task, @RequestParam Long categoryId) {
-        return taskServices.createTask(task, categoryId);
+    public ResponseEntity<ApiResponse<Task>> createTask(@Valid @RequestBody Task task, @RequestParam Long categoryId) {
+        Task savedTask = taskServices.createTask(task, categoryId);
+        ApiResponse<Task> response = new ApiResponse<>(true, "Task created successfully", savedTask);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<Task>>> getAllTasks() {
+        List<Task> tasks = taskServices.getAllTasks();
+        ApiResponse<List<Task>> response = new ApiResponse<>(true, "Tasks retrieved successfully", tasks);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}/toggle")
-    public Task toggleTask(@PathVariable Long id) {
-        return taskServices.toggleTaskStatus(id);
+    public ResponseEntity<ApiResponse<Task>> toggleTaskStatus(@PathVariable Long id) {
+        Task updatedTask = taskServices.toggleTaskStatus(id);
+        ApiResponse<Task> response = new ApiResponse<>(true, "Task status toggled successfully", updatedTask);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
