@@ -1,6 +1,7 @@
 package com.managment.managementsystem.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 
@@ -12,6 +13,7 @@ public class Task {
     @SequenceGenerator(name = "task_seq", sequenceName = "task_sequence", allocationSize = 1)
     private Long id;
     @Column(nullable = false)
+    @NotBlank(message = "Title is required!")
     private String title;
     private String description;
     private LocalDate dueDate;

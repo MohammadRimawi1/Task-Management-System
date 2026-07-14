@@ -2,6 +2,7 @@ package com.managment.managementsystem.controllers;
 
 import com.managment.managementsystem.models.Category;
 import com.managment.managementsystem.services.CategoryServices;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category createCategory(@RequestBody Category category) {
+    public Category createCategory(@Valid @RequestBody Category category) {
         return categoryServices.createCategory(category);
     }
 
