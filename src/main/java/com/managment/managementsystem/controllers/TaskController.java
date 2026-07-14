@@ -2,6 +2,7 @@ package com.managment.managementsystem.controllers;
 
 import com.managment.managementsystem.models.Task;
 import com.managment.managementsystem.services.TaskServices;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task, @RequestParam Long categoryId) {
+    public Task createTask(@Valid @RequestBody Task task, @RequestParam Long categoryId) {
         return taskServices.createTask(task, categoryId);
     }
 
