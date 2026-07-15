@@ -22,7 +22,7 @@ public class CategoryServices {
         return categoryRepository.save(category);
     }
 
-    public Category getCategoryById(Long id) {
+    public Category getCategoryById(String id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category doesn't exist " + id));
     }

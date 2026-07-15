@@ -1,26 +1,23 @@
 package com.managment.managementsystem.models;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "tasks")
+@Document(collection = "tasks")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_seq")
-    @SequenceGenerator(name = "task_seq", sequenceName = "task_sequence", allocationSize = 1)
-    private Long id;
-    @Column(nullable = false)
+    private String id;
     @NotBlank(message = "Title is required!")
     private String title;
     private String description;
     private LocalDate dueDate;
     private boolean completed = false;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @DocumentReference
     private Category category;
 
     public Task() { }
@@ -33,7 +30,7 @@ public class Task {
         this.category = category;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
