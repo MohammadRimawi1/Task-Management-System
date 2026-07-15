@@ -20,7 +20,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Task>> createTask(@Valid @RequestBody Task task, @RequestParam Long categoryId) {
+    public ResponseEntity<ApiResponse<Task>> createTask(@Valid @RequestBody Task task, @RequestParam String categoryId) {
         Task savedTask = taskServices.createTask(task, categoryId);
         ApiResponse<Task> response = new ApiResponse<>(true, "Task created successfully", savedTask);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -34,7 +34,7 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}/toggle")
-    public ResponseEntity<ApiResponse<Task>> toggleTaskStatus(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Task>> toggleTaskStatus(@PathVariable String id) {
         Task updatedTask = taskServices.toggleTaskStatus(id);
         ApiResponse<Task> response = new ApiResponse<>(true, "Task status toggled successfully", updatedTask);
         return new ResponseEntity<>(response, HttpStatus.OK);
